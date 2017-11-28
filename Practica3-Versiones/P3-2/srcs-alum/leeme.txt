@@ -1,0 +1,18 @@
+ENTREGA DE PRÁCTICA 1 Y 2. INFORMÁTICA GRÁFICA. LUIS BALDERAS RUIZ
+
+ESPECIFICACIONES TÉCNICAS:
+
+SO: Ubuntu 16.04 LTS
+Editor: Atom, compilación en línea de comandos.
+
+DATOS DE LA PRÁCTICA
+
+	- PRÁCTICA 1:
+		- Implementado el cauce gráfico. Los archivos se llaman fragment_shader.glsl y vertex_shader.glsl
+		- Teclas implementadas: M: cambia el modo de visualización, P: cambia la práctica activa, O: cambia el objeto dentro de la 			  práctica.
+
+	- PRÁCTICA 2:
+		- Implementada la visualización en modo diferido (VBOs)
+		- Las teclas de la práctica 1 se mantienen. Se añade la tecla V, para activar el modo diferido. 
+
+	- NOTA: No he utilizado ningún .ply externo a los proporcionados. Desarrollo el cubo, tetraedro e utilizo ant.ply, peon.ply y 			beethoven.ply
