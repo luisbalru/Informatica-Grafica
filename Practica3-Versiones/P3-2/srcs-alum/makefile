@@ -15,7 +15,7 @@ target_name	:= prac
 # (para cada nombre habrá un archivo .cpp en 'srcs-alum')
 
 
-units_alu := main practica1 Objeto3D MallaInd practica2 MallaPLY MallaRevol practica3 NodoGrafoEscena EntradaNGE NodoGrafoEscenaParam Grua
+units_alu := main practica1 Objeto3D MallaInd practica2 MallaPLY MallaRevol practica3 parametro NodoGrafoEscena EntradaNGE NodoGrafoEscenaParam Grua
 
 ## ---------------------------------------------------------------------
 ## aspectos configurables

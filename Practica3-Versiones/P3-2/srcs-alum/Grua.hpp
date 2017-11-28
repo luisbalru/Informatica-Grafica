@@ -136,10 +136,9 @@ class Grua : public NodoGrafoEscenaParam
     Grua()
     {
       agregar(MAT_Ident());
-      parametros.push_back(Parametro("Giro de ángulo n"))
+      parametros.push_back(Parametro("Giro de ángulo n",entradas.back().matriz, std::function< Matriz4f(float)>([](float v){return MAT_Rotacion(v,0,1,0);}), false, 100,1,1));
       Construccion();
     }
 };
-
 
 #endif

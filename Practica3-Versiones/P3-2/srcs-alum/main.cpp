@@ -65,7 +65,7 @@ ContextoVis
    contextoVis ; // contexto de visualización actual (modo de visualización)
 
 unsigned
-   practicaActual=3 ;  // practica actual (cambiable por teclado) (1,2,3,4,5)
+   practicaActual=1 ;  // practica actual (cambiable por teclado) (1,2,3,4,5)
 
 unsigned num_practicas=3;
 
@@ -281,6 +281,8 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
             contextoVis.modoVisu=modoAjedrez;
          else if(contextoVis.modoVisu==modoAjedrez)
             contextoVis.modoVisu=modoPuntos;
+         else if(contextoVis.modoVisu==modoPuntos && practicaActual==3)
+            contextoVis.modoVisu=modoPractica3;
          else
             contextoVis.modoVisu=modoAlambre;
          break;
