@@ -6,59 +6,56 @@
 //**********************************************************************************************//
 
 #include "parametro.hpp"
+#include <iostream>
 
-Parametro::Parametro(const std::string & p_descripcion, Matriz4f* p_ptr_mat, TFuncionCMF p_fcm, bool p_acotado, float p_c, float p_s, float p_f)
+Parametro::Parametro(const std::string & p_descripcion, Matriz4f* p_ptr_mat, const TFuncionCMF p_fcm, const bool p_acotado, const float p_c, const float p_s, const float p_f) : descripcion(p_descripcion), acotado(p_acotado), fun_calculo_matriz(p_fcm), c(p_c), s(p_s), f(p_f)
 {
-  descripcion=p_descripcion;
-  acotado=p_acotado;
-  fun_calculo_matriz=p_fcm;
+
   ptr_mat=p_ptr_mat;
-  c=p_c;
-  s=p_s;
-  f=p_f;
+  incremento=1.96;
+  aceleracion=0.8;
+  velocidad_inicial=1;
+  velocidad=velocidad_inicial;
+  p=p_c;
+
 }
 
 void Parametro::siguiente_cuadro()
 {
   p+=velocidad;
-  ptr_mat=fun_calculo_matriz(leer_valor_actual());
+  *ptr_mat=fun_calculo_matriz(leer_valor_actual());
 }
 
 void Parametro::reset()
 {
-  p=0;
-  c=0;
-  s=0;
-  f=0;
+  p=c;
   velocidad=velocidad_inicial;
-  acotado=false;
-  ptr_mat=fun_calculo_matriz(leer_valor_actual());
+  *ptr_mat=fun_calculo_matriz(leer_valor_actual());
 }
+
 
 void Parametro::incrementar()
 {
-  p+=incremento;
-  ptr_mat=fun_calculo_matriz(leer_valor_actual());
+  p=p+incremento;
+  *ptr_mat= fun_calculo_matriz(leer_valor_actual());
 }
 
 void Parametro::decrementar()
 {
   p-=incremento;
-  ptr_mat=fun_calculo_matriz(leer_valor_actual());
+  *ptr_mat=fun_calculo_matriz(leer_valor_actual());
 }
 
 void Parametro::acelerar()
 {
   velocidad+=aceleracion;
-  ptr_mat=fun_calculo_matriz(leer_valor_actual());
 }
 
 void Parametro::decelerar()
 {
-  velocidad+=aceleracion;
+  velocidad-=aceleracion;
   if(velocidad<0)
     velocidad=0;
-  ptr_mat=fun_calculo_matriz(leer_valor_actual());
 }
 
 float Parametro::leer_valor_actual()
@@ -66,7 +63,7 @@ float Parametro::leer_valor_actual()
   float q;
   if(acotado)
   {
-    q=c+s*sin(f*2*M_PI*p);
+    q=c+s*std::sin(f*2*M_PI*p);
   }
   else
   {

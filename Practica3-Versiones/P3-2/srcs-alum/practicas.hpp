@@ -33,4 +33,6 @@ class ContextoVis
       ContextoVis() { modoVisu = modoAlambre ; } // poner alambre por defecto
 };
 
+void FGE_Desocupado ();
+
 #endif

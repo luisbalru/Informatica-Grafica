@@ -7,3 +7,9 @@
 
 
 #include "Grua.hpp"
+#include <vector>
+
+Grua::Grua()
+{
+  Construccion();
+}

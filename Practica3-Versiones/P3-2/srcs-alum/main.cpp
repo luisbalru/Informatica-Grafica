@@ -272,7 +272,11 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
          if(practicaActual==num_practicas)
             practicaActual=1;
          else
+         {
             practicaActual++;
+            if(practicaActual==3)
+              glutIdleFunc(FGE_Desocupado);
+          }
           break;
       case 'M' :
          if(contextoVis.modoVisu==modoAlambre)
@@ -322,6 +326,21 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
    if (redibujar)
       glutPostRedisplay();
 }
+
+// --------------------------------------------------------------------------
+// F.G del evento desocupado
+// --------------------------------------------------------------------------
+
+
+void FGE_Desocupado ()
+{
+	bool desactivar = true ;
+	if ( practicaActual==3 )
+		desactivar = ! P3_FGE_Desocupado ();
+	if ( desactivar )
+		glutIdleFunc ( NULL ); // desactivar para no saturar la CPU innecesariamente.
+}
+
 
 // ---------------------------------------------------------------------
 // F.G. del evento de pulsación de la tecla especial

@@ -4,7 +4,7 @@
 
 #include <functional>
 #include "matrices-tr.hpp"
-#include <math.h>
+#include <cmath>
 #include <string>
 
 typedef std::function< Matriz4f(float)> TFuncionCMF;
@@ -12,24 +12,24 @@ typedef std::function< Matriz4f(float)> TFuncionCMF;
 class Parametro
 {
   private:
-    float incremento=2;
-    float aceleracion=2;
-    float velocidad_inicial=1;
-    string descripcion=""; // descripción del grado de libertad
-    bool acotado=false; // true si el valor oscila entre dos valores, false si no
-    TFuncionCMF fun_calculo_matriz; // función que produce una nueva matriz a partir de un flotante
-    float
-      c=0,  // valor inicial (y central para los acotados)
-      s=0, // semiamplitud (si acotado), o factor de escala (si no acotado)
-      f=0;  // si acotado: frecuencia(ciclos por unidad del valor normalizado)
+    float incremento;
+    float aceleracion;
+    float velocidad_inicial;
+    const std::string descripcion; // descripción del grado de libertad
+    const bool acotado; // true si el valor oscila entre dos valores, false si no
+    const TFuncionCMF fun_calculo_matriz; // función que produce una nueva matriz a partir de un flotante
+    const float
+      c,  // valor inicial (y central para los acotados)
+      s, // semiamplitud (si acotado), o factor de escala (si no acotado)
+      f;  // si acotado: frecuencia(ciclos por unidad del valor normalizado)
     Matriz4f* ptr_mat; // puntero a la matriz dentro del modelo
     float
-      p=0, // valor actual, normalizado, no acotado (crece desde 0)
-      velocidad=velocidad_inicial; // velocidad actual (se suma al valor_norm)
+      p, // valor actual, normalizado, no acotado (crece desde 0)
+      velocidad; // velocidad actual (se suma al valor_norm)
 
   public:
     // crear grado de libertad no acotado
-    Parametro(string & p_descripcion, Matriz4f* p_ptr_mat, TFuncionCMF p_fcm, bool p_acotado, float p_c, float p_s, float p_f);
+    Parametro(const std::string & p_descripcion, Matriz4f* p_ptr_mat, const TFuncionCMF p_fcm,const bool p_acotado,const float p_c,const float p_s,const float p_f);
 
     // actualizar valor y matriz al siguiente frame
     void siguiente_cuadro();
@@ -43,6 +43,10 @@ class Parametro
     // decrementar el valor
     void decrementar();
 
+    float getP()
+    {
+      return p;
+    }
     // acelerar (aumentar velocidad)
     void acelerar();
 
