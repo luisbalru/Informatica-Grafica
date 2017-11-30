@@ -6,6 +6,9 @@
 //**********************************************************************************************//
 
 #include "MallaInd.hpp"
+#include <cstdlib>
+#include <ctime>
+
 
 void MallaInd::visualizarBE()
 {
@@ -145,6 +148,12 @@ void MallaInd::visualizarGL(ContextoVis & cv)
     {
       glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
       //visualizarBEAtrTri();
+    }
+
+    else if(cv.modoVisu==modoColorPlano)
+    {
+      glColor3f(color_x/256.0,color_y/256.0,color_z/256.0);
+      glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
     if(VBOs == false && cv.VBOs == true){
       crearVBOs();

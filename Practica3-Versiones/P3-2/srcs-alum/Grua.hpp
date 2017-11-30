@@ -16,17 +16,25 @@ class Base : public NodoGrafoEscena
     {
       agregar(MAT_Rotacion(90,1,0,0));
       agregar(MAT_Escalado(2,2,0.2));
-      agregar(new Cubo());
+      Cubo* cubo = new Cubo();
+      cubo->rellenar_color(28,36,28);
+      agregar(cubo);
     }
 };
 
 class Estructura : public NodoGrafoEscena
 {
   public:
-    Estructura()
+    Estructura(int i)
     {
+
       agregar(MAT_Escalado(0.5,0.5,0.5));
-      agregar(new Cubo());
+      Cubo* cubo = new Cubo();
+      if(i==0)
+        cubo->rellenar_color(216,26,238);
+      else if(i==1)
+        cubo->rellenar_color(256,0,0);
+      agregar(cubo);
     }
 };
 
@@ -37,7 +45,9 @@ class Top : public NodoGrafoEscena
     {
       agregar(MAT_Rotacion(90,0,0,1));
       agregar(MAT_Escalado(0.5,0.5,0.5));
-      agregar(new Piramide());
+      Piramide * piramide = new Piramide();
+      piramide->rellenar_color(76,238,26);
+      agregar(piramide);
     }
 };
 
@@ -48,19 +58,19 @@ class BrazoDer : public NodoGrafoEscena
     {
       agregar(MAT_Rotacion(-90,0,0,1));
       agregar(MAT_Traslacion(0,0.7,0));
-      agregar(new Estructura());
+      agregar(new Estructura(1));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(1));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(1));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(1));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(1));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(1));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(1));
       agregar(MAT_Traslacion(0,1,0));
     }
 };
@@ -72,11 +82,11 @@ class BrazoIzq : public NodoGrafoEscena
     {
       agregar(MAT_Rotacion(90,0,0,1));
       agregar(MAT_Traslacion(0,0.7,0));
-      agregar(new Estructura());
+      agregar(new Estructura(1));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(1));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(1));
       agregar(MAT_Traslacion(0,1,0));
     }
 };
@@ -89,7 +99,9 @@ class Gancho : public NodoGrafoEscena
       agregar(MAT_Ident());
       agregar(MAT_Traslacion(6.5,-0.6,0));
       agregar(MAT_Escalado(0.5,0.1,0.5));
-      agregar(new Cubo());
+      Cubo* cubo = new Cubo();
+      cubo->rellenar_color(26,238,209);
+      agregar(cubo);
       agregar(MAT_Ident());
       agregar(MAT_Rotacion(90,0,0,1));
       agregar(MAT_Escalado(1,0.11,0.01));
@@ -104,7 +116,9 @@ class Contrapeso : public NodoGrafoEscena
     {
       agregar(MAT_Traslacion(-2,0.3,0));
       agregar(MAT_Escalado(0.6,0.6,0.6));
-      agregar(new Cubo());
+      Cubo* cubo = new Cubo();
+      cubo->rellenar_color(223,238,26);
+      agregar(cubo);
     }
 };
 
@@ -117,19 +131,19 @@ class Grua : public NodoGrafoEscenaParam
       parametros.push_back(Parametro("Movimiento total", entradas.back().matriz,std::function< Matriz4f(float)>([](float v){return MAT_Traslacion(0,0,v);}), true , 3, 7, 0.004));
       agregar(new Base());
       agregar(MAT_Traslacion(0,0.7,0));
-      agregar(new Estructura());
+      agregar(new Estructura(0));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(0));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(0));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(0));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(0));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(0));
       agregar(MAT_Traslacion(0,1,0));
-      agregar(new Estructura());
+      agregar(new Estructura(0));
       agregar(MAT_Ident());
       std::string cadena= "Rotación del brazo";
       parametros.push_back(Parametro(cadena,entradas.back().matriz, std::function< Matriz4f(float)>([](float v){return MAT_Rotacion(v,0,1,0);}), true, 13,200,0.0015));

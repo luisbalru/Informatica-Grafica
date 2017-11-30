@@ -286,7 +286,7 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
          else if(contextoVis.modoVisu==modoAjedrez)
             contextoVis.modoVisu=modoPuntos;
          else if(contextoVis.modoVisu==modoPuntos && practicaActual==3)
-            contextoVis.modoVisu=modoPractica3;
+            contextoVis.modoVisu=modoColorPlano;
          else
             contextoVis.modoVisu=modoAlambre;
          break;

@@ -63,7 +63,7 @@ float Parametro::leer_valor_actual()
   float q;
   if(acotado)
   {
-    q=c+s*std::sin(f*2*M_PI*p);
+    q=c+s*std::sin(f*2*3.141592*p);
   }
   else
   {

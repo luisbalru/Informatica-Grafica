@@ -17,11 +17,11 @@ typedef enum
    modoAlambre,
    modoSolido,
    modoAjedrez,
-   modoPractica3
+   modoColorPlano
 }
    ModosVisu;
 
-const int numModosVisu = 4 ; // numero de modos distintos
+const int numModosVisu = 5 ; // numero de modos distintos
 
 // --------------------------------------------------------------------
 
