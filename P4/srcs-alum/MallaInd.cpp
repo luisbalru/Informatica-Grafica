@@ -7,6 +7,7 @@
 
 #include "MallaInd.hpp"
 #include <cstdlib>
+#include <cmath>
 #include <ctime>
 
 
@@ -164,4 +165,39 @@ void MallaInd::visualizarGL(ContextoVis & cv)
       visualizarVBOs();
     else
       visualizarDE(Ajedrez);
+}
+
+void MallaInd::calcularNormales()
+{
+  for(int i=0; i<ver.size();++i)
+    normales_vertices[i] = Tupla3f(0,0,0);
+
+  for(int i=0; i<tri.size();++i)
+  {
+    int c1 = tri[i](0);
+    int c2 = tri[i](1);
+    int c3 = tri[i](2);
+
+    Tupla3f p = ver[c1];
+    Tupla3f q = ver[c2];
+    Tupla3f r = ver[c3];
+
+    Tupla3f a = q - p;
+    Tupla3f b = r - p;
+
+    Tupla3f mc = b.cross(a);
+    mc = mc.normalized();
+    normales_caras.push_back(mc);
+  }
+
+  for(int i=0; i<tri.size(); ++i)
+  {
+    for(int j=0; j<3; ++j)
+    {
+      int v = tri[i][j];
+      normales_vertices[v] = normales_vertices[v] + normales_caras[i];
+    }
+  }
+  for(int i=0; i<ver.size(); ++i)
+    normales_vertices[i] = normales_vertices[i].normalized();
 }
