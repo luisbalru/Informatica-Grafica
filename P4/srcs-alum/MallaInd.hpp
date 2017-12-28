@@ -112,7 +112,7 @@ class Cubo : public MallaInd
           aux=0;
         }
       }
-
+      calcularNormales();
 
     } // crea las tablas del cubo y le da nombre
 };
@@ -170,6 +170,7 @@ class Cubo_Modified : public MallaInd
           aux=0;
         }
       }
+      calcularNormales();
     }
 };
 
@@ -241,6 +242,7 @@ class Piramide : public MallaInd
           aux=0;
         }
       }
+      calcularNormales();
     }
 };
 
@@ -286,6 +288,7 @@ class Tetraedro : public MallaInd
           aux=0;
         }
       }
+      calcularNormales();
     } // crea las tablas del cubo y le da nombre.
 };
 
