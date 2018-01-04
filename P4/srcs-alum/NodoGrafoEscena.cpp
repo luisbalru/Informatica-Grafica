@@ -20,11 +20,13 @@ void NodoGrafoEscena::visualizarGL(ContextoVis& cv){
     //recorrer todas las entradas del array que hay en el nodo
     for(unsigned i = 0; i< entradas.size(); i++){
         if (entradas[i].tipoE == 0) //Si la entrada es un objeto (tipoE == 0)
-            entradas[i].objeto->visualizarGL(cv);
+          entradas[i].objeto->visualizarGL(cv);
+        else if(entradas[i].tipoE == 2)
+          entradas[i].material->activar();
         else
         {                    //Si la entrada es una transformacion (tipoE == 1)
-            glMatrixMode(GL_MODELVIEW);
-            glMultMatrixf(*(entradas[i].matriz));
+          glMatrixMode(GL_MODELVIEW);
+          glMultMatrixf(*(entradas[i].matriz));
         }
     }
     glMatrixMode(GL_MODELVIEW);
@@ -40,4 +42,10 @@ void NodoGrafoEscena::agregar( Objeto3D *pObjeto){
 void NodoGrafoEscena::agregar( const Matriz4f & pMatriz){
     EntradaNGE entrada(pMatriz);
     entradas.push_back(entrada);
+}
+
+void NodoGrafoEscena::agregar(Material* pMaterial)
+{
+  EntradaNGE entrada(pMaterial);
+  entradas.push_back(entrada);
 }

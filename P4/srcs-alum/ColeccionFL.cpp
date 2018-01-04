@@ -3,18 +3,23 @@
 
 void ColeccionFL::activar()
 {
-  for(int i=0; i<fuentes.size();++i)
-  {
-    glLightfv(GL_LIGHT0+i, GL_POSITION, fuentes[i]->posvec);
-    glLightfv(GL_LIGHT0+i, GL_AMBIENT, fuentes[i]->colores[0]);
-    glLightfv(GL_LIGHT0+i, GL_DIFFUSE, fuentes[i]->colores[1]);
-    glLightfv(GL_LIGHT0+i, GL_SPECULAR, fuentes[i]->colores[2]);
-  }
-  glEnable(GL_DEPTH_TEST);
   glEnable(GL_LIGHTING);
-  for(int i=0; i<fuentes.size();++i)
-  {
-    fuentes[i]->activar(i);
-    std::cout << "Activando fuente de luz " << i << std::endl;
+  glEnable(GL_NORMALIZE);
+  glDisable(GL_COLOR_MATERIAL);
+  glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
+  glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
+  glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+
+  for (unsigned f = 0; f < fuentes.size(); ++f) {
+    fuentes.at(f)->activar(f);
   }
+}
+
+ColeccionFuentesP4::ColeccionFuentesP4() {
+  fuentes.push_back(
+    new FuenteDireccional(0,0)
+  );
+  fuentes.push_back(
+    new FuentePosicional(Tupla3f(5, 5, 0))
+  );
 }

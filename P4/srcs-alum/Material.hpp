@@ -15,7 +15,7 @@
 class Material
 {
   public:
-    virtual void activar(ContextoVis& cv)=0;
+    virtual void activar()=0;
 };
 
 
@@ -26,19 +26,8 @@ class MaterialEstandar : public Material
     Tupla4f color[4]; // 0=Me, 1=Ma, 2=Md, 3=Ms
     float exponente; // exponente
 
-    virtual void activar(ContextoVis& cv); // activa material
+    virtual void activar(); // activa material
 };
-
-
-
-
-
-
-
-
-
-
-
 
 
 

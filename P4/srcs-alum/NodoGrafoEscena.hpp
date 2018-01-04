@@ -22,6 +22,7 @@ class NodoGrafoEscena : public Objeto3D
       // Construir una entrada y añadirla (al final)
       void agregar( Objeto3D *pObjeto);         // objeto
       void agregar( const Matriz4f & pMatriz);  // matriz
+      void agregar(Material* pMaterial); // material
       EntradaNGE & devolver(int pos)
       {
         return (entradas[pos]);

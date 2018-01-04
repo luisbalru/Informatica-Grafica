@@ -23,3 +23,9 @@ EntradaNGE::EntradaNGE (const Matriz4f & pMatriz ){
      matriz = new Matriz4f(pMatriz);
      tipoE = 1;
 }
+
+EntradaNGE::EntradaNGE(Material* pMaterial)
+{
+  material = pMaterial;
+  tipoE = 2;
+}

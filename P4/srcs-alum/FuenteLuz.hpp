@@ -11,6 +11,7 @@
 #include <vector>
 #include "aux.hpp" //Constantes GL_LIGHT0, GL_LIGHT0+i
 #include "tuplasg.hpp"
+#include "matrices-tr.hpp"
 
 class FuenteLuz
 {

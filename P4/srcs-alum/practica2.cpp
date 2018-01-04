@@ -39,7 +39,7 @@ void P2_Inicializar(int argc, char* argv[])
  // Genera los objetos como mallas leyendo del archivo
  // PLY que se ha obtenido anteriormente
  objeto_ply = new MallaPLY(archivo_ply);
- objeto_revol = new MallaRevol(archivo_revol, numero_perfiles, true, true);
+ objeto_revol = new MallaRevol(archivo_revol, numero_perfiles, true, true,false);
  auxiliar = new MallaPLY(archivo_auxiliar);
 }
 

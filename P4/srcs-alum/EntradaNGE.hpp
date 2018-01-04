@@ -8,19 +8,22 @@
 #include "aux.hpp"
 #include "matrizg_impl.hpp"
 #include "Objeto3D.hpp"
+#include "Material.hpp"
 //Entrada del nodo del Grafo de Escena
 class EntradaNGE
 {
 public:
-    unsigned char tipoE; //0=objeto, 1=transformacion
+    unsigned char tipoE; //0=objeto, 1=transformacion, 2=material
     union
     {
         Objeto3D * objeto; //ptr. a un objeto (propietario)
         Matriz4f * matriz; //ptr. a matriz 4x4 transf. (prop.)
+        Material* material;
     } ;
     // constructores (uno por tipo)
     EntradaNGE (Objeto3D * pObjeto ) ;      // (copia solo puntero)
     EntradaNGE (const Matriz4f & pMatriz ); // (crea copia)
+    EntradaNGE(Material* pMaterial);
 } ;
 
 #endif

@@ -228,7 +228,7 @@ void FGE_Redibujado()
 {
    using namespace std ;
    //cout << "redibujado......" << endl << flush ;
-   glUseProgram(idProg);
+   //glUseProgram(idProg); // Prueba quitando shaders
    FijarViewportProyeccion() ; // necesario pues la escala puede cambiar
    FijarCamara();
    LimpiarVentana();
@@ -291,6 +291,10 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
             contextoVis.modoVisu=modoPuntos;
          else if(contextoVis.modoVisu==modoPuntos && practicaActual==3)
             contextoVis.modoVisu=modoColorPlano;
+         else if(contextoVis.modoVisu==modoPuntos && practicaActual==4)
+            contextoVis.modoVisu=modoIluminacionSombreadoPlano;
+         else if(contextoVis.modoVisu==modoIluminacionSombreadoPlano && practicaActual==4)
+            contextoVis.modoVisu=modoIluminacionSombreadoSuave;
          else
             contextoVis.modoVisu=modoAlambre;
          break;
@@ -382,7 +386,7 @@ void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton )
          frustum_factor_escala /= 1.05;
          break;
       default:
-         redisp = P4_FGE_PulsarTeclaEspecial(tecla) ;
+         redisp = false;
          break ;
 	}
    using namespace std ;
@@ -505,7 +509,7 @@ void Inicializa_OpenGL( )
    // ya está
    CError();
 
-   idProg=CrearPrograma("fragment_shader.glsl","vertex_shader.glsl");
+   //idProg=CrearPrograma("fragment_shader.glsl","vertex_shader.glsl");
 
 
 }

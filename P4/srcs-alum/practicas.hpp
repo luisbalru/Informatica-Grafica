@@ -17,7 +17,9 @@ typedef enum
    modoAlambre,
    modoSolido,
    modoAjedrez,
-   modoColorPlano
+   modoColorPlano,
+   modoIluminacionSombreadoPlano,
+   modoIluminacionSombreadoSuave
 }
    ModosVisu;
 

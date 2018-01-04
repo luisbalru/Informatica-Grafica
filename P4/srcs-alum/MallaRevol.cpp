@@ -19,7 +19,7 @@ vector<Tupla3f> MallaRevol::Rotar(Matriz4f& m, vector<Tupla3f>& vertices)
   }
   return sol;
 }
-MallaRevol::MallaRevol(const string & nombre_arch, const unsigned nperfiles, const bool crear_tapas, const bool cerrar_malla, const bool generar_textura)
+MallaRevol::MallaRevol(const string & nombre_arch, const unsigned nperfiles, const bool crear_tapas, const bool cerrar_malla, bool crear_coord_text)
 {
   // Extrae información de nombre_arch
   vector<float> vertices_ply;
@@ -36,6 +36,18 @@ MallaRevol::MallaRevol(const string & nombre_arch, const unsigned nperfiles, con
 
   ver=perfil;
   int num_ver = perfil.size();
+
+  vector<float> distancias;
+  distancias.reserve(num_ver);
+  float distancia=0;
+  distancias.push_back(distancia);
+  for(int i=0; i<num_ver; ++i)
+  {
+    Tupla3f aux = ver[i+1]-ver[i];
+    aux = Tupla3f(abs(aux(0)),abs(aux(1)),abs(aux(2)));
+    distancia = sqrt(aux(0)*aux(0) + aux(1)*aux(1) + aux(2)*aux(2)) + distancia;
+    distancias.push_back(distancia);
+  }
 
   for(unsigned i=0; i<nperfiles; i++)
   {
@@ -89,8 +101,21 @@ MallaRevol::MallaRevol(const string & nombre_arch, const unsigned nperfiles, con
   this->num_tri_impar = tri_impares.size();
   this->num_tri_par = tri_pares.size();
 
-  if(generar_textura)
+  if(crear_coord_text)
+    calcularCordTextura(nperfiles, num_ver, distancias);
+}
+
+void MallaRevol::calcularCordTextura(const unsigned nperfiles, int nvertices, vector<float> distancias)
+{
+  float s=0;
+  float t=0;
+  for(int i=0;i<nperfiles;++i)
   {
-    
+    s=(float)(i)/float((nperfiles-1));
+    for(int j=0; j<nvertices; ++j)
+    {
+      t=(float)(distancias[j])/(float)(distancias[nvertices-1]);
+    }
+    coords_textura.push_back(Tupla2f(s,t));
   }
 }

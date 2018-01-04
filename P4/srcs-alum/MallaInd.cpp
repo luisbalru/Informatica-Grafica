@@ -53,10 +53,10 @@ void MallaInd::visualizarBEAtrTri()
   {
     if(col_tri.size()>0)
       glColor3fv(col_tri[i]);
-/*
-    if(nor_tri.size()>0)
-      glNormal3fv(nor_tri[i]); //Para normales
-*/
+
+    if(normales_caras.size()>0)
+      glNormal3fv(normales_caras[i]); //Para normales
+
     for(unsigned j=0; j<3; ++j)
     {
       unsigned iv=tri[i](j);
@@ -128,6 +128,24 @@ void MallaInd::visualizarVBOs()
   }
 }
 
+void MallaInd::visualizarDE_NT()
+{
+  glVertexPointer(3,GL_FLOAT,0,ver.data());
+  glTexCoordPointer(2, GL_FLOAT,0, coords_textura.data());
+  glNormalPointer(GL_FLOAT,0,normales_vertices.data());
+
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+  glDrawElements(GL_TRIANGLES,num_tri,GL_UNSIGNED_INT,tri.data());
+
+  glDisableClientState(GL_VERTEX_ARRAY);
+  glDisableClientState(GL_NORMAL_ARRAY);
+  glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+
 void MallaInd::visualizarGL(ContextoVis & cv)
 {
     glColor3f(1.0,0.0,0.0);
@@ -156,6 +174,46 @@ void MallaInd::visualizarGL(ContextoVis & cv)
       glColor3f(color_x/256.0,color_y/256.0,color_z/256.0);
       glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
+
+    else if(cv.modoVisu==modoIluminacionSombreadoPlano)
+    {
+      glShadeModel(GL_FLAT);
+
+      if (!coords_textura.empty()) {
+        glTexCoordPointer(2, GL_FLOAT, 0, &coords_textura.front());
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+      }
+
+      if (!normales_vertices.empty()) {
+        glNormalPointer(GL_FLOAT, 0, &normales_vertices.front());
+        glEnableClientState(GL_NORMAL_ARRAY);
+      }
+
+      glDrawElements(GL_TRIANGLES, 3 * tri.size(), GL_UNSIGNED_INT, &tri.front());
+
+      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+      glDisableClientState(GL_NORMAL_ARRAY);
+    }
+
+    else if(cv.modoVisu==modoIluminacionSombreadoSuave)
+    {
+      glShadeModel(GL_SMOOTH);
+      if (!coords_textura.empty()) {
+        glTexCoordPointer(2, GL_FLOAT, 0, &coords_textura.front());
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+      }
+
+      if (!normales_vertices.empty()) {
+        glNormalPointer(GL_FLOAT, 0, &normales_vertices.front());
+        glEnableClientState(GL_NORMAL_ARRAY);
+      }
+
+      glDrawElements(GL_TRIANGLES, 3 * tri.size(), GL_UNSIGNED_INT, &tri.front());
+
+      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+      glDisableClientState(GL_NORMAL_ARRAY);
+    }
+
     if(VBOs == false && cv.VBOs == true){
       crearVBOs();
       VBOs=true;
@@ -167,8 +225,14 @@ void MallaInd::visualizarGL(ContextoVis & cv)
       visualizarDE(Ajedrez);
 }
 
+static Tupla3f normalizar(Tupla3f t) {
+  return (t(X) != 0 || t(Y) != 0 || t(Z) != 0) ? t.normalized() : Tupla3f(1, 0, 0);
+}
+
 void MallaInd::calcularNormales()
 {
+  normales_vertices.reserve(ver.size());
+  normales_caras.reserve(tri.size());
   for(int i=0; i<ver.size();++i)
     normales_vertices[i] = Tupla3f(0,0,0);
 
@@ -186,7 +250,6 @@ void MallaInd::calcularNormales()
     Tupla3f b = r - p;
 
     Tupla3f mc = b.cross(a);
-    mc = mc.normalized();
     normales_caras.push_back(mc);
   }
 
@@ -198,6 +261,7 @@ void MallaInd::calcularNormales()
       normales_vertices[v] = normales_vertices[v] + normales_caras[i];
     }
   }
-  for(int i=0; i<ver.size(); ++i)
-    normales_vertices[i] = normales_vertices[i].normalized();
+  std::transform(normales_caras.begin(), normales_caras.end(),normales_caras.begin(), normalizar);
+  std::transform(normales_vertices.begin(), normales_vertices.end(),normales_vertices.begin(), normalizar);
+
 }

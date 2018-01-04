@@ -105,7 +105,7 @@ class Gancho : public NodoGrafoEscena
       agregar(MAT_Ident());
       agregar(MAT_Rotacion(90,0,0,1));
       agregar(MAT_Escalado(1,0.11,0.01));
-      agregar(new MallaRevol("cilindro.ply",1000,true,true));
+      agregar(new MallaRevol("cilindro.ply",1000,true,true,false));
     }
 };
 

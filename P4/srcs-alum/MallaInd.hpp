@@ -37,6 +37,7 @@ class MallaInd : public Objeto3D
     void visualizarBE(); // visualizar (Begin/End)
     void visualizarDE(bool ajedrez); // visualizar (DrawElements)
     void visualizarBEAtrTri(); // BE para ajedrez
+    void visualizarDE_NT(); // Draw Elements con textura
 
   public:
     virtual void visualizarGL(ContextoVis & cv);
