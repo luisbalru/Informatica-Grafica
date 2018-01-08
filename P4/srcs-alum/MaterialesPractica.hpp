@@ -43,5 +43,4 @@ class MaterialPeonNegro : public MaterialEstandar
     MaterialPeonNegro();
 };
 
-
 #endif
