@@ -47,8 +47,4 @@ public:
   Peon(bool usar_textura = false);
 };
 
-
-
-
-
 #endif

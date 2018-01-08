@@ -18,6 +18,7 @@ bool animaciones=false;
 int grado_libertad_actual=0;
 int grados_libertad=4;
 
+
 static Grua* grua = NULL;
 void P3_Inicializar()
 {

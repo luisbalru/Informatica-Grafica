@@ -12,6 +12,7 @@
 
 #include "MallaInd.hpp"
 #include "practicas.hpp"
+#include "Material.hpp"
 
 void P3_Inicializar();
 void P3_DibujarObjetos(ContextoVis & cv);
