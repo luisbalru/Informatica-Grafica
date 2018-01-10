@@ -473,7 +473,7 @@ void Inicializa_OpenGL( )
    CError();
 
 #ifdef LINUX
-   ExigirGLEW("");
+   //ExigirGLEW("");
 #endif
 
    // habilitar test de comparación de profundidades para 3D (y 2D)

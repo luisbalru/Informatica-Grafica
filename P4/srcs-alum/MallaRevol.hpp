@@ -12,7 +12,8 @@ class MallaRevol : public MallaInd
   // constructor: crea una malla de revolución
     MallaRevol(const string & nombre_arch, const unsigned nperfiles, const bool crear_tapas, const bool cerrar_malla, bool crear_coord_text);
     vector<Tupla3f> Rotar(Matriz4f& m, vector<Tupla3f>& vector);
-    void calcularCordTextura(const unsigned nperfiles, int nvertices, vector<float> distancias);
+    double CalculaNorma(Tupla3f vector);
+
 };
 
 #endif

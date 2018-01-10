@@ -7,13 +7,32 @@
 #include "MallaRevol.hpp"
 #include "NodoGrafoEscenaParam.hpp"
 #include <string>
+#include "Material.hpp"
 
+class MaterialBase : public MaterialEstandar
+{
+  public:
+    MaterialBase();
+};
+
+class MaterialEstructura : public MaterialEstandar
+{
+  public:
+    MaterialEstructura();
+};
+
+class MaterialGancho : public MaterialEstandar
+{
+  public:
+    MaterialGancho();
+};
 
 class Base : public NodoGrafoEscena
 {
   public:
     Base()
     {
+      agregar(new MaterialBase());
       agregar(MAT_Rotacion(90,1,0,0));
       agregar(MAT_Escalado(2,2,0.2));
       Cubo* cubo = new Cubo();
@@ -27,7 +46,7 @@ class Estructura : public NodoGrafoEscena
   public:
     Estructura(int i)
     {
-
+      agregar(new MaterialEstructura());
       agregar(MAT_Escalado(0.5,0.5,0.5));
       Cubo* cubo = new Cubo();
       if(i==0)
@@ -56,6 +75,7 @@ class BrazoDer : public NodoGrafoEscena
   public:
     BrazoDer()
     {
+      agregar(new MaterialEstructura());
       agregar(MAT_Rotacion(-90,0,0,1));
       agregar(MAT_Traslacion(0,0.7,0));
       agregar(new Estructura(1));
@@ -80,6 +100,7 @@ class BrazoIzq : public NodoGrafoEscena
   public:
     BrazoIzq()
     {
+      agregar(new MaterialEstructura());
       agregar(MAT_Rotacion(90,0,0,1));
       agregar(MAT_Traslacion(0,0.7,0));
       agregar(new Estructura(1));
@@ -96,6 +117,7 @@ class Gancho : public NodoGrafoEscena
   public:
     Gancho()
     {
+      agregar(new MaterialGancho());
       agregar(MAT_Ident());
       agregar(MAT_Traslacion(6.5,-0.6,0));
       agregar(MAT_Escalado(0.5,0.1,0.5));

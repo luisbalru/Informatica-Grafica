@@ -36,19 +36,6 @@ MallaRevol::MallaRevol(const string & nombre_arch, const unsigned nperfiles, con
 
   ver=perfil;
   int num_ver = perfil.size();
-
-  vector<float> distancias;
-  distancias.reserve(num_ver);
-  float distancia=0;
-  distancias.push_back(distancia);
-  for(int i=0; i<num_ver; ++i)
-  {
-    Tupla3f aux = ver[i+1]-ver[i];
-    aux = Tupla3f(abs(aux(0)),abs(aux(1)),abs(aux(2)));
-    distancia = sqrt(aux(0)*aux(0) + aux(1)*aux(1) + aux(2)*aux(2)) + distancia;
-    distancias.push_back(distancia);
-  }
-
   for(unsigned i=0; i<nperfiles; i++)
   {
     std::vector<Tupla3f> siguientePerfil = Rotar(m,perfil);
@@ -102,20 +89,32 @@ MallaRevol::MallaRevol(const string & nombre_arch, const unsigned nperfiles, con
   this->num_tri_par = tri_pares.size();
 
   if(crear_coord_text)
-    calcularCordTextura(nperfiles, num_ver, distancias);
+  {
+    vector<float> distancias;
+        for(int j = 0; j < perfil.size();++j)
+        {
+            if(j==0)
+                distancias.push_back(0);
+            else
+            {
+                distancias.push_back(distancias[distancias.size()-1]+CalculaNorma(perfil[j]-perfil[j-1]));
+            }
+        }
+        for(int i = 0; i < nperfiles;++i)
+        {
+            for(int j = 0; j < perfil.size();++j)
+            {
+                float s,t;
+                s = ((float)i)/((float)nperfiles-1);
+                t = 1-((float)distancias[j])/((float)distancias[distancias.size()-1]);
+                cout << s << ", " << t << endl;
+                this->coords_textura.push_back(Tupla2f(s,t));
+            }
+        }
+  }
 }
 
-void MallaRevol::calcularCordTextura(const unsigned nperfiles, int nvertices, vector<float> distancias)
+double MallaRevol::CalculaNorma(Tupla3f vector)
 {
-  float s=0;
-  float t=0;
-  for(int i=0;i<nperfiles;++i)
-  {
-    s=(float)(i)/float((nperfiles-1));
-    for(int j=0; j<nvertices; ++j)
-    {
-      t=(float)(distancias[j])/(float)(distancias[nvertices-1]);
-    }
-    coords_textura.push_back(Tupla2f(s,t));
-  }
+    return sqrt(vector(0)*vector(0) + vector(1)*vector(1) + vector(2)*vector(2));
 }

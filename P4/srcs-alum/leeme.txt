@@ -1,18 +1,17 @@
-ENTREGA DE PRÁCTICA 1 Y 2. INFORMÁTICA GRÁFICA. LUIS BALDERAS RUIZ
+DATOS DE LA ENTREGA PRÁCTICA 4. LUIS BALDERAS RUIZ
 
-ESPECIFICACIONES TÉCNICAS:
+- Se han añadido materiales al grafo de escena de la práctica 3. Todos ellos se definen en el archivo Grua.hpp y se implementan en el Grua.cpp. Son los siguientes:
 
-SO: Ubuntu 16.04 LTS
-Editor: Atom, compilación en línea de comandos.
+	· class MaterialBase
+	· class MaterialEstructura
+	· class MaterialGancho
 
-DATOS DE LA PRÁCTICA
+- Sistema Operativo: Ubuntu 16.04 64bits
 
-	- PRÁCTICA 1:
-		- Implementado el cauce gráfico. Los archivos se llaman fragment_shader.glsl y vertex_shader.glsl
-		- Teclas implementadas: M: cambia el modo de visualización, P: cambia la práctica activa, O: cambia el objeto dentro de la 			  práctica.
+- Teclas implementadas: Aquellas pedidas en la práctica 4 del manual.
 
-	- PRÁCTICA 2:
-		- Implementada la visualización en modo diferido (VBOs)
-		- Las teclas de la práctica 1 se mantienen. Se añade la tecla V, para activar el modo diferido. 
+	· Tecla G: Conmuta entre latitud y longitud para las fuentes direccionales de luz.
+	· Tecla > aumenta el valor del ángulo actual (longitud o latitud).
+	· Tecla < disminuye el valor del ángulo actual.
 
-	- NOTA: No he utilizado ningún .ply externo a los proporcionados. Desarrollo el cubo, tetraedro e utilizo ant.ply, peon.ply y 			beethoven.ply
+

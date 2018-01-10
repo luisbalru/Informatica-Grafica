@@ -46,15 +46,15 @@ LateralLata::LateralLata() {
   // La malla de revolución para el cuerpo de la lata la
   // generamos sin bases y con una textura, invirtiendo
   // el cálculo de las coordenadas de textura:
-  agregar(new MallaRevol("../plys/lata-pcue.ply", 100, false, true, true));
+  agregar(new MallaRevol("../plys/lata-pcue.ply", 100, false, false, true));
 }
 
 BaseInfLata::BaseInfLata() {
-  agregar(new MallaRevol("../plys/lata-pinf.ply", 100, false,true,false));
+  agregar(new MallaRevol("../plys/lata-pinf.ply", 100, true,true,false));
 }
 
 BaseSupLata::BaseSupLata() {
-  agregar(new MallaRevol("../plys/lata-psup.ply", 100, false,true,false));
+  agregar(new MallaRevol("../plys/lata-psup.ply", 100, true,true,false));
 }
 
 Peon::Peon(bool usar_textura) {
@@ -71,6 +71,9 @@ void P4_Inicializar()
 void P4_DibujarObjetos(ContextoVis& cv)
 {
   glEnable(GL_LIGHTING);
+  glEnable(GL_TEXTURE_2D);
+   glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+   glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
   p4_escena->visualizarGL(cv);
   glDisable(GL_LIGHTING);
 }

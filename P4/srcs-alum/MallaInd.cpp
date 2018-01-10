@@ -1,7 +1,7 @@
 //**********************************************************************************************//
 //                                                                                              //
 //                            Implementación MallaInd.hpp                                       //
-//                          IG Curso 2016-2017. Autor: Luis Balderas Ruiz                       //
+//                          IG Curso 2017-2018. Autor: Luis Balderas Ruiz                       //
 //                                                                                              //
 //**********************************************************************************************//
 
@@ -23,27 +23,6 @@ void MallaInd::visualizarBE()
       }
     }
   glEnd();
-}
-
-
-void MallaInd::visualizarDE(bool ajedrez)
-{
-  // habilitar uso de un array de vértices
-  glEnableClientState(GL_VERTEX_ARRAY);
-  //especificar puntero a tabla de coordenadas de vértices
-  glVertexPointer(3,GL_FLOAT,0,&(ver[0]));
-  // dibujar usando vértices indexados
-  // params: 1 tipo de primitivas, 2 número de vértices, 3 tipo de vertices, 4 puntero a tabla de triángulos
-  if(ajedrez)
-  {
-    glDrawElements(GL_TRIANGLES, 3*num_tri/2,GL_UNSIGNED_INT, tri_pares.data());
-    glColor3f(0,0,1);
-    glDrawElements(GL_TRIANGLES, 3*num_tri/2,GL_UNSIGNED_INT, tri_impares.data());
-  }
-  else
-    glDrawElements(GL_TRIANGLES, 3*num_tri,GL_UNSIGNED_INT, tri.data());
-  // deshabilitar el array de vértices
-  glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 void MallaInd::visualizarBEAtrTri()
@@ -146,6 +125,29 @@ void MallaInd::visualizarDE_NT()
 }
 
 
+
+
+void MallaInd::visualizarDE(bool ajedrez)
+{
+  // habilitar uso de un array de vértices
+  glEnableClientState(GL_VERTEX_ARRAY);
+  //especificar puntero a tabla de coordenadas de vértices
+  glVertexPointer(3,GL_FLOAT,0,&(ver[0]));
+  // dibujar usando vértices indexados
+  // params: 1 tipo de primitivas, 2 número de vértices, 3 tipo de vertices, 4 puntero a tabla de triángulos
+  if(ajedrez)
+  {
+    glDrawElements(GL_TRIANGLES, 3*num_tri/2,GL_UNSIGNED_INT, tri_pares.data());
+    glColor3f(0,0,1);
+    glDrawElements(GL_TRIANGLES, 3*num_tri/2,GL_UNSIGNED_INT, tri_impares.data());
+  }
+  else
+    glDrawElements(GL_TRIANGLES, 3*num_tri,GL_UNSIGNED_INT, tri.data());
+  // deshabilitar el array de vértices
+  glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+
 void MallaInd::visualizarGL(ContextoVis & cv)
 {
     glColor3f(1.0,0.0,0.0);
@@ -180,16 +182,17 @@ void MallaInd::visualizarGL(ContextoVis & cv)
       glShadeModel(GL_FLAT);
 
       if (!coords_textura.empty()) {
-        glTexCoordPointer(2, GL_FLOAT, 0, &coords_textura.front());
+        glTexCoordPointer(2, GL_FLOAT, 0, coords_textura.data());
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
       }
 
       if (!normales_vertices.empty()) {
-        glNormalPointer(GL_FLOAT, 0, &normales_vertices.front());
+        glNormalPointer(GL_FLOAT, 0, normales_vertices.data());
         glEnableClientState(GL_NORMAL_ARRAY);
       }
-
-      glDrawElements(GL_TRIANGLES, 3 * tri.size(), GL_UNSIGNED_INT, &tri.front());
+      glVertexPointer(3,GL_FLOAT,0,ver.data());
+      glEnableClientState(GL_VERTEX_ARRAY);
+      glDrawElements(GL_TRIANGLES, 3L * tri.size(), GL_UNSIGNED_INT, tri.data());
 
       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
       glDisableClientState(GL_NORMAL_ARRAY);
@@ -199,16 +202,17 @@ void MallaInd::visualizarGL(ContextoVis & cv)
     {
       glShadeModel(GL_SMOOTH);
       if (!coords_textura.empty()) {
-        glTexCoordPointer(2, GL_FLOAT, 0, &coords_textura.front());
+        glTexCoordPointer(2, GL_FLOAT, 0, coords_textura.data());
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
       }
 
       if (!normales_vertices.empty()) {
-        glNormalPointer(GL_FLOAT, 0, &normales_vertices.front());
+        glNormalPointer(GL_FLOAT, 0, normales_vertices.data());
         glEnableClientState(GL_NORMAL_ARRAY);
       }
-
-      glDrawElements(GL_TRIANGLES, 3 * tri.size(), GL_UNSIGNED_INT, &tri.front());
+      glVertexPointer(3,GL_FLOAT,0,ver.data());
+      glEnableClientState(GL_VERTEX_ARRAY);
+      glDrawElements(GL_TRIANGLES, 3L * tri.size(), GL_UNSIGNED_INT, tri.data());
 
       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
       glDisableClientState(GL_NORMAL_ARRAY);
@@ -219,11 +223,70 @@ void MallaInd::visualizarGL(ContextoVis & cv)
       VBOs=true;
     }
 
-    if(VBOs)
+    if(cv.modoVisu!=modoIluminacionSombreadoPlano && cv.modoVisu!=modoIluminacionSombreadoSuave){
+      if(VBOs)
       visualizarVBOs();
     else
       visualizarDE(Ajedrez);
+    }
 }
+/*
+void MallaInd::visualizarGL(ContextoVis& cv)
+{
+  const GLenum modo[] = {GL_POINT, GL_LINE, GL_FILL, GL_FILL, GL_FILL, GL_FILL};
+
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glVertexPointer(3, GL_FLOAT, 0, &ver.front());
+  glPolygonMode(GL_FRONT_AND_BACK, modo[cv.modoVisu]);
+
+  if (cv.modoVisu == modoPuntos || cv.modoVisu == modoSolido || cv.modoVisu == modoAlambre) {
+    glColor3f(0.5, 0.5, 0.5);
+    glDrawElements(GL_TRIANGLES,num_tri,GL_UNSIGNED_INT,tri.data());
+  } else if (cv.modoVisu == modoAjedrez) { // Ajedrez
+    for (unsigned i = 0; i < tri.size(); i++) {
+      float tone = 0.8 * (i % 2); // 0.8 if i is odd
+      glColor3f(tone, tone, tone);
+      glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, &tri[i]);
+    }
+  } else if (cv.modoVisu == modoIluminacionSombreadoPlano) {
+    glShadeModel(GL_FLAT);
+
+    if (!coords_textura.empty()) {
+      glTexCoordPointer(2, GL_FLOAT, 0, &coords_textura.front());
+      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    }
+
+    if (!normales_vertices.empty()) {
+      glNormalPointer(GL_FLOAT, 0, &normales_vertices.front());
+      glEnableClientState(GL_NORMAL_ARRAY);
+    }
+
+    glDrawElements(GL_TRIANGLES, 3L*tri.size(), GL_UNSIGNED_INT, &tri.front());
+
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+
+  } else if (cv.modoVisu == modoIluminacionSombreadoSuave) {
+    glShadeModel(GL_SMOOTH);
+
+    if (!coords_textura.empty()) {
+      glTexCoordPointer(2, GL_FLOAT, 0, &coords_textura.front());
+      glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    }
+
+    if (!normales_vertices.empty()) {
+      glNormalPointer(GL_FLOAT, 0, &normales_vertices.front());
+      glEnableClientState(GL_NORMAL_ARRAY);
+    }
+
+    glDrawElements(GL_TRIANGLES, 3L*tri.size(), GL_UNSIGNED_INT, &tri.front());
+
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+  }
+
+  glDisableClientState(GL_VERTEX_ARRAY);
+}*/
 
 static Tupla3f normalizar(Tupla3f t) {
   return (t(X) != 0 || t(Y) != 0 || t(Z) != 0) ? t.normalized() : Tupla3f(1, 0, 0);

@@ -36,12 +36,14 @@ void Textura::activar()
   }
 }
 
-Textura::Textura(const std::string& archivoJPG, unsigned mgct) :mgct(mgct) {
+Textura::Textura(const std::string& archivoJPG, unsigned mgct_p){
   img = new jpg::Imagen(archivoJPG);
+  mgct = mgct_p;
 
   cs[0] = ct[2] = 1;
   cs[1] = cs[2] = cs[3] = ct[0] = ct[1] = ct[3] = 0;
 
+  glEnable(GL_TEXTURE_2D);
   glGenTextures(1, &idText);
   glBindTexture(GL_TEXTURE_2D, idText);
 
